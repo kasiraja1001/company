@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <title>CKR MART </title>
+        <meta name="description" content="This is the description">
+            <style>
+	   *
+{
+    margin: 0;
+    padding: 0; 
+}
+body
+{
+    font-family: sans-serif;
+}
+
+
+.fa-shopping-basket
+{
+    margin-right: 5px;
+}
+@media only screen and (max-width: 980px)
+{
+    .top-nav-bar
+    {
+        height: 118px;
+        border-bottom: 0;
+    }
+    .search-box
+    {
+        width: 100%;
+    }
+    .menu-bar
+    {
+        width: 100%;
+    }
+    .menu-bar ul
+    {
+        margin: 10px 0;
+        width: 100%;
+    }
+    .menu-bar ul li
+    {
+        height: 57px;
+        width: 100%;
+    } 
+}
+
+.side-menu
+{
+    height: 79%;
+    width: 15%;
+    font-size: 14px;
+    float: left;
+    z-index: 2;
+    background-color: #ddd;
+}
+.side-menu ul
+{
+    margin-left: 10px;
+}
+.side-menu ul li
+{
+    list-style-type: none;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.side-menu ul li:hover
+{
+    color: green;
+}
+.side-menu ul li ul
+{
+    display: none;
+    z-index: 10;
+    top: 77px;
+}
+.side-menu ul li:hover ul
+{
+    display: block;
+    height: 100px;
+    margin-left: 14%;
+    padding: 0 100px 10px 10px;
+    position: fixed;
+    background: #ececec;
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.5);
+}
+.fa-angle-right
+{
+    margin-top: 4px;
+    margin-right: 8px;
+    float: right;
+}
+#menu-btn, #close-btn
+{
+    font-size: 30px;
+    margin: 10px;
+    color: orange;
+    display: none;
+}
+
+@media only screen and (max-width: 980px)
+{
+    .side-menu
+    {
+        width: 34%;
+        z-index: 20;
+        top: 133px;
+        position: fixed;
+        font-size: 12px;  
+        display: none;
+        background: #f1f3f4;
+    }
+    .side-menu ul li ul
+    {
+        top: 133px;
+    }
+    .side-menu ul li:hover ul
+    {
+        margin-left: 31%;
+    }
+    #menu-btn
+    {
+        display: block;
+    }
+}
+
+
+</style>
+        <script>
+		if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', ready)
+} else {
+    ready()
+}
+
+function ready() {
+    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+    for (var i = 0; i < removeCartItemButtons.length; i++) {
+        var button = removeCartItemButtons[i]
+        button.addEventListener('click', removeCartItem)
+    }
+
+    var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var input = quantityInputs[i]
+        input.addEventListener('change', quantityChanged)
+    }
+
+    var addToCartButtons = document.getElementsByClassName('shop-item-button')
+    for (var i = 0; i < addToCartButtons.length; i++) {
+        var button = addToCartButtons[i]
+        button.addEventListener('click', addToCartClicked)
+    }
+
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+}
+
+function purchaseClicked() {
+    alert('Thank you for your purchase')
+	window.location= "final.html";
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+    updateCartTotal()
+}
+
+function removeCartItem(event) {
+    var buttonClicked = event.target
+    buttonClicked.parentElement.parentElement.remove()
+    updateCartTotal()
+}
+
+function quantityChanged(event) {
+    var input = event.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal()
+}
+
+function addToCartClicked(event) {
+    var button = event.target
+    var shopItem = button.parentElement.parentElement
+    var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
+    var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    addItemToCart(title, price, imageSrc)
+    updateCartTotal()
+}
+
+function addItemToCart(title, price, imageSrc) {
+    var cartRow = document.createElement('div')
+    cartRow.classList.add('cart-row')
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+    for (var i = 0; i < cartItemNames.length; i++) {
+        if (cartItemNames[i].innerText == title) {
+            alert('This item is already added to the cart')
+            return
+        }
+    }
+    var cartRowContents = `
+        <div class="cart-item cart-column">
+            <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+            <span class="cart-item-title">${title}</span>
+        </div>
+        <span class="cart-price cart-column">${price}</span>
+        <div class="cart-quantity cart-column">
+            <input class="cart-quantity-input" type="number" value="1">
+            <button class="btn btn-danger" type="button">REMOVE</button>
+        </div>`
+    cartRow.innerHTML = cartRowContents
+    cartItems.append(cartRow)
+    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
+    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+}
+
+function updateCartTotal() {
+    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var total = 0
+    for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var quantity = quantityElement.value
+        total = total + (price * quantity)
+    }
+    total = Math.round(total * 100) / 100
+    document.getElementsByClassName('cart-total-price')[0].innerText = 'Rs ' + total
+}
+		</script>
+    </head>
+    <body>
+	<nav class="navbar navbar-fixed-top" style="background-color:black">
+ <div class=" container-fluid">
+ <div class="navbar-header">
+ <a href="#" class="navbar-brand"> CKR MART </a>
+ </div>
+    <ul class="nav navbar-header">
+      <li class="active"><a href="main.html">&nbsp Home</a></li>
+      <li><a href="login.html#"> &nbsp Login</a></li>
+      <li><a href="signin.html">&nbsp Sign up</a></li>
+      <li><a href="main.html">&nbsp Shop</a></li>
+    </ul>
+  </div>
+</nav>
+  
+        <section class="container content-section">
+            <h2 class="section-header">OPPO</h2>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo F1 </span>
+                    <img class="shop-item-image" src="https://images-na.ssl-images-amazon.com/images/I/41UFVnYtHrL.jpg">
+                    <div class="shop-item-details">
+                        <span  style="color: green; font-size: 30pt" class="shop-item-price">10000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo F11pro</span>
+                    <img class="shop-item-image" src="data:image/jpeg;base64,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">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">20000 Rs</span>
+                        <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo Reno</span>
+                    <img class="shop-item-image" src="https://assorted.downloads.oppo.com/static/archives/images/dd/Smartphones/Reno/thumbnail.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">23999 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo Rx17</span>
+                    <img class="shop-item-image" src="https://technave.com/data/files/mall/article/201811070714156667.jpg">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">15000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container content-section">
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo R17</span>
+                    <img class="shop-item-image" src="https://static.toiimg.com/thumb/msid-65384045,width-640,resizemode-4/65384045.jpg">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">14000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Oppo R7</span>
+                    <img class="shop-item-image" src="https://i.pinimg.com/originals/52/43/e1/5243e1fd35ff3f6279525777523eb3bc.jpg">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">15070 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container content-section">
+            <h2 class="section-header">CART</h2>
+            <div class="cart-row">
+                <span class="cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-items">
+            </div>
+            <div class="cart-total">
+                <strong class="cart-total-title">Total</strong>
+                <span style="color: green; font-size: 30pt" class="cart-total-price"> 0</span>
+            </div>
+            <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+        </section>
+        <footer class="main-footer">
+            <div class="container main-footer-container">
+                <h3 class="band-name">CKR MART</h3>
+                <ul class="nav footer-nav">
+                    
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>

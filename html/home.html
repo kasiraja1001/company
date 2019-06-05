@@ -1,0 +1,20 @@
+<html>
+<head>
+<title> CKR MART </title>
+<link href="cart.css" rel="stylesheet" type="text/css" />
+<script src="cart.js" type="text/javascript"> </script>
+<script>
+var scart=new shoppingcart();
+scart.paypal.business = "ckrpandian@paypal.com"
+scart.invantory.Add("INKGARDEN,"Ink Garderner (Sumi-e)","49.95","Ink Garderner (Sumi-e)","");
+scart.invantory.Add("IPADCOVER,"Ipod cover","25.00","Ipod cover","");
+
+</head>
+<body>
+	<div id="INKGARDEN.item"> </div>
+	<div id="IPADCOVER.item"> </div>
+	<input type="button" onclick="scart.Show" value="Show cart" />
+</body>
+
+
+</html>

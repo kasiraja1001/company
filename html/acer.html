@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <title>CKR MART </title>
+        <meta name="description" content="This is the description">
+             <style>
+	   *
+{
+    margin: 0;
+    padding: 0; 
+}
+body
+{
+    font-family: sans-serif;
+}
+
+
+.fa-shopping-basket
+{
+    margin-right: 5px;
+}
+@media only screen and (max-width: 980px)
+{
+    .top-nav-bar
+    {
+        height: 118px;
+        border-bottom: 0;
+    }
+    .search-box
+    {
+        width: 100%;
+    }
+    .menu-bar
+    {
+        width: 100%;
+    }
+    .menu-bar ul
+    {
+        margin: 10px 0;
+        width: 100%;
+    }
+    .menu-bar ul li
+    {
+        height: 57px;
+        width: 100%;
+    } 
+}
+
+.side-menu
+{
+    height: 79%;
+    width: 15%;
+    font-size: 14px;
+    float: left;
+    z-index: 2;
+    background-color: #ddd;
+}
+.side-menu ul
+{
+    margin-left: 10px;
+}
+.side-menu ul li
+{
+    list-style-type: none;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.side-menu ul li:hover
+{
+    color: green;
+}
+.side-menu ul li ul
+{
+    display: none;
+    z-index: 10;
+    top: 77px;
+}
+.side-menu ul li:hover ul
+{
+    display: block;
+    height: 100px;
+    margin-left: 14%;
+    padding: 0 100px 10px 10px;
+    position: fixed;
+    background: #ececec;
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.5);
+}
+.fa-angle-right
+{
+    margin-top: 4px;
+    margin-right: 8px;
+    float: right;
+}
+#menu-btn, #close-btn
+{
+    font-size: 30px;
+    margin: 10px;
+    color: orange;
+    display: none;
+}
+
+@media only screen and (max-width: 980px)
+{
+    .side-menu
+    {
+        width: 34%;
+        z-index: 20;
+        top: 133px;
+        position: fixed;
+        font-size: 12px;  
+        display: none;
+        background: #f1f3f4;
+    }
+    .side-menu ul li ul
+    {
+        top: 133px;
+    }
+    .side-menu ul li:hover ul
+    {
+        margin-left: 31%;
+    }
+    #menu-btn
+    {
+        display: block;
+    }
+}
+
+
+</style>
+        <script>
+		if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', ready)
+} else {
+    ready()
+}
+
+function ready() {
+    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+    for (var i = 0; i < removeCartItemButtons.length; i++) {
+        var button = removeCartItemButtons[i]
+        button.addEventListener('click', removeCartItem)
+    }
+
+    var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var input = quantityInputs[i]
+        input.addEventListener('change', quantityChanged)
+    }
+
+    var addToCartButtons = document.getElementsByClassName('shop-item-button')
+    for (var i = 0; i < addToCartButtons.length; i++) {
+        var button = addToCartButtons[i]
+        button.addEventListener('click', addToCartClicked)
+    }
+
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+}
+
+function purchaseClicked() {
+    alert('Thank you for your purchase')
+	window.location= "final.html";
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+    updateCartTotal()
+}
+
+function removeCartItem(event) {
+    var buttonClicked = event.target
+    buttonClicked.parentElement.parentElement.remove()
+    updateCartTotal()
+}
+
+function quantityChanged(event) {
+    var input = event.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal()
+}
+
+function addToCartClicked(event) {
+    var button = event.target
+    var shopItem = button.parentElement.parentElement
+    var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
+    var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    addItemToCart(title, price, imageSrc)
+    updateCartTotal()
+}
+
+function addItemToCart(title, price, imageSrc) {
+    var cartRow = document.createElement('div')
+    cartRow.classList.add('cart-row')
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+    for (var i = 0; i < cartItemNames.length; i++) {
+        if (cartItemNames[i].innerText == title) {
+            alert('This item is already added to the cart')
+            return
+        }
+    }
+    var cartRowContents = `
+        <div class="cart-item cart-column">
+            <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+            <span class="cart-item-title">${title}</span>
+        </div>
+        <span class="cart-price cart-column">${price}</span>
+        <div class="cart-quantity cart-column">
+            <input class="cart-quantity-input" type="number" value="1">
+            <button class="btn btn-danger" type="button">REMOVE</button>
+        </div>`
+    cartRow.innerHTML = cartRowContents
+    cartItems.append(cartRow)
+    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
+    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+}
+
+function updateCartTotal() {
+    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var total = 0
+    for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var quantity = quantityElement.value
+        total = total + (price * quantity)
+    }
+    total = Math.round(total * 100) / 100
+    document.getElementsByClassName('cart-total-price')[0].innerText = 'Rs ' + total
+}
+		</script>
+    </head>
+    <body>
+	<nav class="navbar navbar-fixed-top" style="background-color:black">
+ <div class=" container-fluid">
+ <div class="navbar-header">
+ <a href="#" class="navbar-brand"> CKR MART </a>
+ </div>
+    <ul class="nav navbar-header">
+      <li class="active"><a href="main.html">&nbsp Home</a></li>
+      <li><a href="login.html#"> &nbsp Login</a></li>
+      <li><a href="sigin.html">&nbsp Sign up</a></li>
+      <li><a href="main.html">&nbsp Shop</a></li>
+    </ul>
+  </div>
+</nav>
+  
+        <section class="container content-section">
+            <h2 class="section-header">Acer Laptops</h2>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer SF714-51T-M9H0 </span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Laptops/Swift_7/Swift7-Ale/Image/20180326/Swift_7_Ale_preview.png">
+                    <div class="shop-item-details">
+                        <span  style="color: green; font-size: 30pt" class="shop-item-price">19000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer Aspire 3 A315-33</span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Laptops/Swift_7/Image/20190226/swift_7_SF714-52T-Black-Budlight_AL_preview.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">16350 Rs</span>
+                        <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer Spin 7</span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Notebooks/Spin%207/Images/20160823/Spin-7_preview.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">17599 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer Spin 5</span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Laptops/Spin_5/Image/20180824/acer-Spin_5_SP513-53N-preview.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">14000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container content-section">
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer Switch 7 Black Edition</span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Laptops/Switch_7_Black_Edition/image/20171102/Switch-7_preview.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">17000 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Acer Switch 3 </span>
+                    <img class="shop-item-image" src="https://static.acer.com/up/Resource/Acer/Laptops/Switch_3/Image/20170615/Switch-3_preview.png">
+                    <div class="shop-item-details">
+                        <span style="color: green; font-size: 30pt" class="shop-item-price">15070 Rs</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container content-section">
+            <h2 class="section-header">CART</h2>
+            <div class="cart-row">
+                <span class="cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-items">
+            </div>
+            <div class="cart-total">
+                <strong class="cart-total-title">Total</strong>
+                <span style="color: green; font-size: 30pt" class="cart-total-price"> 0</span>
+            </div>
+            <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+        </section>
+        <footer class="main-footer">
+            <div class="container main-footer-container">
+                <h3 class="band-name">CKR MART</h3>
+                <ul class="nav footer-nav">
+                    
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <title>CKR MART </title>
+        <meta name="description" content="This is the description">
+        <link rel="stylesheet" href="css/card.css" />
+        <script src="js/card.js" async></script>
+   
+	</head>
+    <body>
+	<nav class="navbar navbar-fixed-top" style="background-color:black">
+ <div class=" container-fluid">
+ <div class="navbar-header">
+ <a href="#" class="navbar-brand"> CKR MART </a>
+ </div>
+    <ul class="nav navbar-header">
+      <li class="active"><a href="main.html">&nbsp Home</a></li>
+      <li><a href="login.html#"> &nbsp Login</a></li>
+      <li><a href="signin.html">&nbsp Sign up</a></li>
+      <li><a href="main.html">&nbsp Shop</a></li>
+    </ul>
+  </div>
+</nav>
+  
+       <div class="row">
+  <div class="col-75">
+    <div class="container">
+      <form action="end.html">
+    <body>
+        <h1>Payment</h1>
+    
+        <form action="/" method="post" id="example-form" style="display: none;">
+
+            <div class="form-row">
+                <label for="name" class="stripeLabel">Your Name</label>
+                <input type="text" name="name" class="required" />
+            </div>            
+    
+            <div class="form-row">
+                <label for="email">E-mail Address</label>
+                <input type="text" name="email" class="required" />
+            </div>            
+    
+            <div class="form-row">
+                <label>Card Number</label>
+                <input type="text" maxlength="20" autocomplete="off" class="card-number stripe-sensitive required" />
+            </div>
+            
+            <div class="form-row">
+                <label>CVC</label>
+                <input type="text" maxlength="4" autocomplete="off" class="card-cvc stripe-sensitive required" />
+            </div>
+            
+            <div class="form-row">
+                <label>Expiration</label>
+                <div class="expiry-wrapper">
+                    <select class="card-expiry-month stripe-sensitive required">
+                    </select>
+                    <script type="text/javascript">
+                        var select = $(".card-expiry-month"),
+                            month = new Date().getMonth() + 1;
+                        for (var i = 1; i <= 12; i++) {
+                            select.append($("<option value='"+i+"' "+(month === i ? "selected" : "")+">"+i+"</option>"))
+                        }
+                    </script>
+                    <span> / </span>
+                    <select class="card-expiry-year stripe-sensitive required"></select>
+                    <script type="text/javascript">
+                        var select = $(".card-expiry-year"),
+                            year = new Date().getFullYear();
+                        for (var i = 0; i < 12; i++) {
+                            select.append($("<option value='"+(i + year)+"' "+(i === 0 ? "selected" : "")+">"+(i + year)+"</option>"))
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <button type="submit" name="submit-button">Submit</button>
+            <span class="payment-errors"></span>
+        </form>
+    </div>
+  </div>
+
+  <div class="col-25">
+    
+</div>
+        <footer class="main-footer">
+            <div class="container main-footer-container">
+                <h3 class="band-name">CKR MART</h3>
+                <ul class="nav footer-nav">
+                    
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>
