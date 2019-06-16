@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+   <meta name="Author" content="Kasirajapandian">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+ <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+ <link rel="stylesheet" href="css/style.css" type="text/css">
+ <link rel="stylesheet" href="css/main.css" type="text/css">
+ <link rel="stylesheet" href="css/footer.css" type="text/css">
+ <link rel="stylesheet" href="css/theme.css" type="text/css">
+  <title>CKR MART</title>
+  <script src="jscript/mainpage.js" async></script>
+  <header class="navbar navbar-inverse navbar-fixed-top" style="background-color:black">
+  <div class="container">
+        <a class="navbar-brand" href="#" style="cursor: pointer"> CKR MART </a>
+		<ul class="nav navbar-header">
+      <li class="active"><a href="homepage.html">&nbsp Home</a></li>
+      <li><a href="redmi.html#"> &nbsp Mobiles</a></li>
+      <li><a href="tshirt.html">&nbsp Tshirts</a></li>
+     <li><a href="laptop.html">&nbsp Laptops</a></li>
+     <li><a href="pendrive.html">&nbsp Pendrives</a></li>
+    </ul>
+	</div>
+    </header>
+<body background="img/bgrds.jpg">
+<div class="container" >
+<div class="jumbotron" style="margin-top:-50px ">	
+</div>
+</div>
+</head>
+<h3 style="text-align: center">Payment Processing Page</h3>
+<h3 style="text-align: center"> Your Invoice Bill</h3>
+<center>
+		 <div class="container" "col-md-6">
+		               <div class="media panel">
+						<div class="media-body">
+				Name : <span id="name1"></span><br>
+				E-mail : <span id="email1"></span><br>
+				Address : <span id="addr1"></span><br>
+				Place : <span id="place1"></span><br>
+				pincode : <span id="pincode1"></span><br>
+			    Card No :  <span id="card1"></span><br>
+				 <p>Ordered Date : <span id="orddate"></span></p>
+				 <p>Expected to deliver your product in 10days !   <span id="expdate"></span></p>
+				 
+			</div>
+			</div>
+			</div>
+		</center>
+  <h1 style="text-transform:uppercase"><p id="name_field"></p></h1>
+  <section class="container content-section">
+            <h2 class="section-header">Thank you for Purchasing</h2>
+           			<center>
+<button class="btn btn-primary" type="button" align="center" ><a href="homepage.html"> Home </a> </button>
+        </section>
+		<center>
+		
+ <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">CKR MART</h5>
+                <p class="grey-text text-lighten-4">You can Purchase a Products at 24 X 7 .</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Products</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="redmi.html">Mobiles</a></li>
+                  <li><a class="grey-text text-lighten-3" href="tshirt.html">T-shirts</a></li>
+                  <li><a class="grey-text text-lighten-3" href="laptop.html">Laptops</a></li>
+                  <li><a class="grey-text text-lighten-3" href="pendrive.html">Pendrives</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+  <div class="footer-copyright text-center py-3">© 2019 Copyright:
+    <a href="www.ckrmart.com"> CKR MART </a>
+  </div>
+  </div>
+  </div>
+</footer>
+    </body>
+	<script>
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth()+1;
+var year = date.getFullYear();
+	document.getElementById("name1").innerHTML=localStorage.getItem("textvalues");
+	document.getElementById("email1").innerHTML=localStorage.getItem("textvalues2");
+	document.getElementById("addr1").innerHTML=localStorage.getItem("textvalues3");
+	document.getElementById("place1").innerHTML=localStorage.getItem("textvalues4");
+	document.getElementById("pincode1").innerHTML=localStorage.getItem("textvalues5");
+	document.getElementById("card1").innerHTML=localStorage.getItem("textvalues6");
+	document.getElementById("orddate").innerHTML = day+"-"+month+"-"+year;
+
+   	</script>
+	  <script type="text/javascript" src="jscript/jquery.js"></script>
+   <script type="text/javascript" src="jscript/bootstrap.js"></script>
+   <script type="text/javascript" src="jscript/end.js"></script>
+   <script type="text/javascript" src="jscript/final.js"></script>
+   <script type="text/javascript" src="jscript/store.js"></script>
+</html>

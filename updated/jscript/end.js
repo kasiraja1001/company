@@ -1,0 +1,1 @@
+document.getElementById("cartRow").innerHTML=localStorage.getItem("cartRow");
