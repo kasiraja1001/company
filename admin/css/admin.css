@@ -1,0 +1,49 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
+.active
+{
+	background : tomato;
+}
+
+.heading
+{
+	background: tomato;
+	height: 60px;
+	margin-top ": -20px
+}
+.pro
+{
+	background: black;
+	padding: -10px;
+	height: 220px;
+}
+.menu{
+	background: black;
+
+}
+.menu >ul>li
+{
+  border: 1px solid #888;
+margin-left: -40px;
+padding: 15px; 
+}
+.menu >ul>li>a
+{
+	color: white;
+	font-size: 17px;
+} 
+.menu >ul>li>a:hover
+{
+	text-decoration: none;
+}
+.menu >ul>li:hover
+{
+	background: tomato;
+}
+.cc
+{
+	border: 1px;
+	background: #f5f5f5;
+	border-radius: 5px;
+	height: 100px;
+}
